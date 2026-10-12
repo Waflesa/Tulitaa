@@ -72,7 +72,7 @@ class ProductoCard extends StatelessWidget {
               valor: Formato.moneda(ganancia),
             ),
             const SizedBox(height: 10),
-            Container(
+                        Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
               decoration: BoxDecoration(
@@ -80,13 +80,19 @@ class ProductoCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('PRECIO DE VENTA', style: tema.textTheme.labelLarge),
-                  Text(
-                    Formato.moneda(precio),
-                    style: tema.textTheme.titleLarge?.copyWith(
-                      color: tema.colorScheme.onPrimaryContainer,
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        Formato.moneda(precio),
+                        style: tema.textTheme.titleLarge?.copyWith(
+                          color: tema.colorScheme.onPrimaryContainer,
+                        ),
+                      ),
                     ),
                   ),
                 ],
