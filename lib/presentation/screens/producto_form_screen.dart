@@ -5,11 +5,15 @@ import 'package:provider/provider.dart';
 import '../../core/constants/app_constants.dart';
 import '../../core/utils/formato.dart';
 import '../viewmodels/inventario_viewmodel.dart';
+import '../../domain/entities/producto.dart';
 
 /// Formulario para registrar un producto nuevo.
 /// Muestra en vivo el precio de venta mientras se escribe el costo.
 class ProductoFormScreen extends StatefulWidget {
-  const ProductoFormScreen({super.key});
+  final Producto? producto; // null = producto nuevo
+
+  const ProductoFormScreen({super.key, this.producto});
+  
 
   @override
   State<ProductoFormScreen> createState() => _ProductoFormScreenState();
@@ -22,6 +26,22 @@ class _ProductoFormScreenState extends State<ProductoFormScreen> {
   final _stockCtrl = TextEditingController();
   String? _categoria;
   bool _guardando = false;
+
+    bool get _editando => widget.producto != null;
+
+  @override
+  void initState() {
+    super.initState();
+    final p = widget.producto;
+    if (p != null) {
+      _nombreCtrl.text = p.nombre;
+      _costoCtrl.text = p.costo.toString();
+      _stockCtrl.text = p.stock.toString();
+      if (AppConstants.categorias.contains(p.categoria)) {
+        _categoria = p.categoria;
+      }
+    }
+  }
 
   @override
   void dispose() {
@@ -41,12 +61,22 @@ class _ProductoFormScreenState extends State<ProductoFormScreen> {
     final vm = context.read<InventarioViewModel>();
     setState(() => _guardando = true);
 
-    final ok = await vm.agregarProducto(
-      nombre: _nombreCtrl.text,
-      costo: _leerCosto(_costoCtrl.text)!,
-      categoria: _categoria!,
-      stock: int.parse(_stockCtrl.text.trim()),
-    );
+        final costo = _leerCosto(_costoCtrl.text)!;
+    final stock = int.parse(_stockCtrl.text.trim());
+    final ok = _editando
+        ? await vm.actualizarProducto(
+            widget.producto!,
+            nombre: _nombreCtrl.text,
+            costo: costo,
+            categoria: _categoria!,
+            stock: stock,
+          )
+        : await vm.agregarProducto(
+            nombre: _nombreCtrl.text,
+            costo: costo,
+            categoria: _categoria!,
+            stock: stock,
+          );
 
     if (!mounted) return;
     setState(() => _guardando = false);
@@ -69,7 +99,8 @@ class _ProductoFormScreenState extends State<ProductoFormScreen> {
     final tema = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Nuevo producto')),
+            appBar: AppBar(
+          title: Text(_editando ? 'Editar producto' : 'Nuevo producto')),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),

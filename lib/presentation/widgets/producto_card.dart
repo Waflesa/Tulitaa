@@ -8,11 +8,15 @@ import '../../domain/services/pricing_service.dart';
 class ProductoCard extends StatelessWidget {
   final Producto producto;
   final PricingService pricing;
+  final VoidCallback? onEditar;
+  final VoidCallback? onEliminar;
 
   const ProductoCard({
     super.key,
     required this.producto,
     required this.pricing,
+    this.onEditar,
+    this.onEliminar,
   });
 
   @override
@@ -30,7 +34,31 @@ class ProductoCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(producto.nombre, style: tema.textTheme.titleMedium),
+                        Row(
+              children: [
+                Expanded(
+                  child: Text(producto.nombre,
+                      style: tema.textTheme.titleMedium),
+                ),
+                IconButton(
+                  tooltip: 'Editar',
+                  iconSize: 32,
+                  constraints:
+                      const BoxConstraints(minWidth: 56, minHeight: 56),
+                  icon: const Icon(Icons.edit),
+                  onPressed: onEditar,
+                ),
+                IconButton(
+                  tooltip: 'Eliminar',
+                  iconSize: 32,
+                  constraints:
+                      const BoxConstraints(minWidth: 56, minHeight: 56),
+                  color: Colors.red.shade700,
+                  icon: const Icon(Icons.delete),
+                  onPressed: onEliminar,
+                ),
+              ],
+            ),
             const SizedBox(height: 4),
             Text(
               '${producto.categoria}  •  En stock: ${producto.stock}',
