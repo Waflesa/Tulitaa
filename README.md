@@ -168,9 +168,9 @@ Esta es una versión de prototipo (MVP), todavía no una solución de producció
 
 | Integrante | Usuario de GitHub | Aporte principal |
 |---|---|---|
-| Fernando | MorongaExplosiva | Fronted  |
-| Winston Vidal Reyes Narvaez | Backend  |
-| Ramon Antonio Mendoza cano  | Documento|
+| Fernando Marcelo Arauz Blanco| MorongaExplosiva | Fronted  |
+| Winston Vidal Reyes Narvaez  | Waflesa          |Backend   |
+| Ramon Antonio Mendoza cano   |SopladoDeHollin   | Documento|
 
 
 
