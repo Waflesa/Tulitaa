@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../core/utils/formato.dart';
 import '../../domain/entities/producto.dart';
 import '../../domain/services/pricing_service.dart';
+import '../../core/constants/app_constants.dart';
 
 /// Tarjeta grande con nombre, costo, margen y precio de venta ya calculado.
 class ProductoCard extends StatelessWidget {
@@ -24,11 +25,20 @@ class ProductoCard extends StatelessWidget {
     final tema = Theme.of(context);
     final precio = pricing.precioVenta(producto.costo);
     final ganancia = pricing.ganancia(producto.costo);
+        final agotado = producto.stock == 0;
+    final stockBajo = producto.stock <= AppConstants.stockBajo;
+    final colorAlerta =
+        agotado ? Colors.red.shade700 : Colors.orange.shade900;
 
     return Card(
       elevation: 2,
       margin: const EdgeInsets.symmetric(vertical: 8),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+            shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(18),
+        side: stockBajo
+            ? BorderSide(color: colorAlerta, width: 3)
+            : BorderSide.none,
+      ),
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -65,6 +75,37 @@ class ProductoCard extends StatelessWidget {
               style: tema.textTheme.bodyMedium
                   ?.copyWith(color: Colors.grey.shade800),
             ),
+                          if (stockBajo) ...[
+              const SizedBox(height: 12),
+              Container(
+                width: double.infinity,
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                decoration: BoxDecoration(
+                  color: colorAlerta,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(Icons.warning_amber_rounded,
+                        color: Colors.white, size: 30),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        agotado
+                            ? 'AGOTADO'
+                            : '¡POCO STOCK! Quedan ${producto.stock}',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
             const Divider(height: 28, thickness: 1.5),
             _Fila(etiqueta: 'Costo', valor: Formato.moneda(producto.costo)),
             _Fila(

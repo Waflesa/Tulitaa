@@ -6,6 +6,8 @@ class AppConstants {
 
   // --- Base de datos ---
   static const String dbName = 'pulperia_tulita.db';
+    /// Cuando el stock es menor o igual a este número, se muestra la alerta.
+  static const int stockBajo = 5;
   static const int dbVersion = 1;
   static const String tablaProductos = 'productos';
 
