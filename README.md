@@ -194,3 +194,6 @@ git config user.email "su-correo@ejemplo.com"
 Código del proyecto bajo licencia MIT (ver [`LICENSE`](LICENSE)).
 Los componentes de terceros y sus licencias están listados en
 [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
+
+  **APK de prueba:** descárguelo desde
+  [Releases](https://github.com/Waflesa/Tulitaa/releases/tag/v0.1.0).
