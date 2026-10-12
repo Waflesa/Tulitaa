@@ -25,15 +25,14 @@ class ProductoCard extends StatelessWidget {
     final tema = Theme.of(context);
     final precio = pricing.precioVenta(producto.costo);
     final ganancia = pricing.ganancia(producto.costo);
-        final agotado = producto.stock == 0;
+    final agotado = producto.stock == 0;
     final stockBajo = producto.stock <= AppConstants.stockBajo;
-    final colorAlerta =
-        agotado ? Colors.red.shade700 : Colors.orange.shade900;
+    final colorAlerta = agotado ? Colors.red.shade700 : Colors.orange.shade900;
 
     return Card(
       elevation: 2,
       margin: const EdgeInsets.symmetric(vertical: 8),
-            shape: RoundedRectangleBorder(
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(18),
         side: stockBajo
             ? BorderSide(color: colorAlerta, width: 3)
@@ -44,11 +43,11 @@ class ProductoCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-                        Row(
+            Row(
               children: [
                 Expanded(
-                  child: Text(producto.nombre,
-                      style: tema.textTheme.titleMedium),
+                  child:
+                      Text(producto.nombre, style: tema.textTheme.titleMedium),
                 ),
                 IconButton(
                   tooltip: 'Editar',
@@ -75,7 +74,7 @@ class ProductoCard extends StatelessWidget {
               style: tema.textTheme.bodyMedium
                   ?.copyWith(color: Colors.grey.shade800),
             ),
-                          if (stockBajo) ...[
+            if (stockBajo) ...[
               const SizedBox(height: 12),
               Container(
                 width: double.infinity,
@@ -113,7 +112,7 @@ class ProductoCard extends StatelessWidget {
               valor: Formato.moneda(ganancia),
             ),
             const SizedBox(height: 10),
-                        Container(
+            Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
               decoration: BoxDecoration(

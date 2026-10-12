@@ -46,3 +46,6 @@ app.*.map.json
 
 # Widget Preview related
 .widget_preview/
+
+# Archivos temporales de Office (bloqueo de Excel/Word)
+~$*

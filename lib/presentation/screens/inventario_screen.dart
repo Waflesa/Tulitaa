@@ -68,7 +68,8 @@ class _InventarioScreenState extends State<InventarioScreen> {
       );
     }
   }
-    Future<void> _editar(Producto producto) async {
+
+  Future<void> _editar(Producto producto) async {
     final guardado = await Navigator.of(context).push<bool>(
       MaterialPageRoute(
         builder: (_) => ProductoFormScreen(producto: producto),
@@ -215,7 +216,7 @@ class _InventarioScreenState extends State<InventarioScreen> {
                   // Espacio abajo para que el botón flotante no tape la última tarjeta.
                   padding: const EdgeInsets.fromLTRB(16, 12, 16, 110),
                   itemCount: visibles.length,
-                                    itemBuilder: (_, i) => ProductoCard(
+                  itemBuilder: (_, i) => ProductoCard(
                     producto: visibles[i],
                     pricing: vm.pricing,
                     onEditar: () => _editar(visibles[i]),

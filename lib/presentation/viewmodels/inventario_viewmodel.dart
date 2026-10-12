@@ -55,9 +55,9 @@ class InventarioViewModel extends ChangeNotifier {
       notifyListeners();
       return false;
     }
-    
   }
-    /// Devuelve true si se actualizó bien.
+
+  /// Devuelve true si se actualizó bien.
   Future<bool> actualizarProducto(
     Producto original, {
     required String nombre,

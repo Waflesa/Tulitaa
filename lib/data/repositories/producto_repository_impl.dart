@@ -28,7 +28,8 @@ class ProductoRepositoryImpl implements ProductoRepository {
       ProductoModel.fromEntity(producto).toMap(),
     );
   }
-    @override
+
+  @override
   Future<int> actualizar(Producto producto) async {
     final db = await _dbHelper.database;
     final datos = ProductoModel.fromEntity(producto).toMap()..remove('id');

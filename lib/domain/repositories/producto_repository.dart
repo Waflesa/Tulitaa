@@ -5,6 +5,6 @@ import '../entities/producto.dart';
 abstract class ProductoRepository {
   Future<List<Producto>> obtenerTodos();
   Future<int> insertar(Producto producto);
-    Future<int> actualizar(Producto producto);
+  Future<int> actualizar(Producto producto);
   Future<int> eliminar(int id);
 }

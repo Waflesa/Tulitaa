@@ -7,13 +7,12 @@ import '../../core/utils/formato.dart';
 import '../viewmodels/inventario_viewmodel.dart';
 import '../../domain/entities/producto.dart';
 
-/// Formulario para registrar un producto nuevo.
+/// Formulario para registrar un producto nuevo o editar uno existente.
 /// Muestra en vivo el precio de venta mientras se escribe el costo.
 class ProductoFormScreen extends StatefulWidget {
   final Producto? producto; // null = producto nuevo
 
   const ProductoFormScreen({super.key, this.producto});
-  
 
   @override
   State<ProductoFormScreen> createState() => _ProductoFormScreenState();
@@ -27,7 +26,7 @@ class _ProductoFormScreenState extends State<ProductoFormScreen> {
   String? _categoria;
   bool _guardando = false;
 
-    bool get _editando => widget.producto != null;
+  bool get _editando => widget.producto != null;
 
   @override
   void initState() {
@@ -61,7 +60,7 @@ class _ProductoFormScreenState extends State<ProductoFormScreen> {
     final vm = context.read<InventarioViewModel>();
     setState(() => _guardando = true);
 
-        final costo = _leerCosto(_costoCtrl.text)!;
+    final costo = _leerCosto(_costoCtrl.text)!;
     final stock = int.parse(_stockCtrl.text.trim());
     final ok = _editando
         ? await vm.actualizarProducto(
@@ -99,8 +98,8 @@ class _ProductoFormScreenState extends State<ProductoFormScreen> {
     final tema = Theme.of(context);
 
     return Scaffold(
-            appBar: AppBar(
-          title: Text(_editando ? 'Editar producto' : 'Nuevo producto')),
+      appBar:
+          AppBar(title: Text(_editando ? 'Editar producto' : 'Nuevo producto')),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
@@ -145,17 +144,16 @@ class _ProductoFormScreenState extends State<ProductoFormScreen> {
                 ),
                 const SizedBox(height: 20),
                 DropdownButtonFormField<String>(
-                  value: _categoria,
+                  initialValue: _categoria,
                   isExpanded: true,
-                  style: tema.textTheme.bodyLarge
-                      ?.copyWith(color: Colors.black87),
+                  style:
+                      tema.textTheme.bodyLarge?.copyWith(color: Colors.black87),
                   decoration: const InputDecoration(labelText: 'Categoría'),
                   items: AppConstants.categorias
                       .map((c) => DropdownMenuItem(value: c, child: Text(c)))
                       .toList(),
                   onChanged: (v) => setState(() => _categoria = v),
-                  validator: (v) =>
-                      v == null ? 'Escoja una categoría' : null,
+                  validator: (v) => v == null ? 'Escoja una categoría' : null,
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
