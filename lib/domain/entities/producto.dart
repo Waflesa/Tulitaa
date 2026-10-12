@@ -16,4 +16,20 @@ class Producto {
     required this.stock,
     required this.creadoEn,
   });
+
+  Producto copyWith({
+    String? nombre,
+    double? costo,
+    String? categoria,
+    int? stock,
+  }) {
+    return Producto(
+      id: id,
+      nombre: nombre ?? this.nombre,
+      costo: costo ?? this.costo,
+      categoria: categoria ?? this.categoria,
+      stock: stock ?? this.stock,
+      creadoEn: creadoEn,
+    );
+  }
 }

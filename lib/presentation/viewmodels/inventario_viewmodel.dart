@@ -55,5 +55,43 @@ class InventarioViewModel extends ChangeNotifier {
       notifyListeners();
       return false;
     }
+    
+  }
+    /// Devuelve true si se actualizó bien.
+  Future<bool> actualizarProducto(
+    Producto original, {
+    required String nombre,
+    required double costo,
+    required String categoria,
+    required int stock,
+  }) async {
+    try {
+      await _repositorio.actualizar(original.copyWith(
+        nombre: nombre.trim(),
+        costo: costo,
+        categoria: categoria,
+        stock: stock,
+      ));
+      await cargarProductos();
+      return true;
+    } catch (_) {
+      _error = 'No se pudo actualizar el producto. Intente de nuevo.';
+      notifyListeners();
+      return false;
+    }
+  }
+
+  /// Devuelve true si se eliminó bien.
+  Future<bool> eliminarProducto(Producto producto) async {
+    if (producto.id == null) return false;
+    try {
+      await _repositorio.eliminar(producto.id!);
+      await cargarProductos();
+      return true;
+    } catch (_) {
+      _error = 'No se pudo eliminar el producto. Intente de nuevo.';
+      notifyListeners();
+      return false;
+    }
   }
 }
